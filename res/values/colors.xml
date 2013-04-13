@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="base_green"> #337733 </color>
+    <color name="final_green"> #11dd11 </color>
+    <color name="base_black"> #000000 </color>
+    <color name="base_dark_gray"> #333333 </color>
+    <color name="alpha_white"> #ddffffff </color>
+    <color name="button_normal_gray"> #cccccc </color>
+    <color name="turiskana_yellow"> #ffbf00 </color>
+    <color name="turiskana_green"> #00bf00 </color>
+    <color name="turiskana_red"> #bf0000</color>
+    <color name="edittext_gray"> #eeeeee </color>
+	<color name="product_color"> #363636</color>
+    <string-array name="background_colors">
+        <item> #222222 </item>
+        <item> #444444 </item>
+        <item> #666666 </item>
+    </string-array>
+
+</resources>

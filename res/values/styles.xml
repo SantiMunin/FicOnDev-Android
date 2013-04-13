@@ -1,0 +1,20 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="AppTheme" parent="Theme.Sherlock.Light">
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+    </style>
+    
+    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/actionbar_background</item>
+        <item name="android:background">@drawable/actionbar_background</item>
+        <item name="backgroundSplit">@drawable/actionbar_background</item>
+    </style>
+    
+    <style name="TuriskanaActionBarTitleStyle">
+        <item name="android:textSize"> 20sp </item>
+        <item name="android:textStyle"> bold </item>
+        <item name="android:textColor"> @color/base_black </item>
+    </style>
+ 
+    
+</resources>
