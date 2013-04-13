@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.LoginInfo;
 
 /**
  * Provides a simple way to edit application's preferences. Naive
@@ -22,11 +21,6 @@ public class PreferencesUtil {
 	private final static String MAIL = "mail";
 	private final static String ID_STORY = "id_story";
 	private final static String CURRENT_CHECKPOINT = "current_checkpoint";
-
-	public static void deleteLoginInfo(Context context, LoginInfo loginInfo) {
-		setSessionId(context, "");
-		setMail(context, "");
-	}
 
 	public static void setSessionId(Context context, String sessionId) {
 		putString(context, SESSION_ID, sessionId);

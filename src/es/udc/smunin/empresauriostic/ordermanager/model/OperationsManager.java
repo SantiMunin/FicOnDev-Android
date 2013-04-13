@@ -42,6 +42,7 @@ public class OperationsManager {
 
 	public void doLogin(final Context context, final String email,
 			final String password, final BooleanCallback callback) {
+		PreferencesUtil.setSessionId(context, "");
 		client.post(buildUrl("login", email, password),
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
@@ -264,9 +265,13 @@ public class OperationsManager {
 	}
 
 	public void getFinalizedOrders(final Context context,
-			final ListCallback<Order> callback) {
+			final ListCallback<Order> callback, boolean new_orders) {
 		String sessionId = PreferencesUtil.getSessionId(context);
-		client.get(buildUrl("pickedorders", sessionId),
+		String number = "0";
+		if (new_orders) {
+			number = "1";
+		}
+		client.get(buildUrl("pickedorders", sessionId, number),
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
 						Log.d(TAG, "response: " + response);

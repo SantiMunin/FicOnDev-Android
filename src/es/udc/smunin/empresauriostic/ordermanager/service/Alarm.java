@@ -31,15 +31,43 @@ public class Alarm extends BroadcastReceiver implements ListCallback<Order> {
 
 	}
 
-	private void checkNewEvents(Context context) {
+	private void checkNewEvents(final Context context) {
 		OperationsManager.getInstance().getCompletedOrders(context, this);
+		OperationsManager.getInstance().getFinalizedOrders(context,
+				new ListCallback<Order>() {
+
+					@Override
+					public void onSuccess(List<Order> objects) {
+						if (objects.size() > 0) {
+							launchPickedNotification(context, null, true);
+						} else {
+							launchPickedNotification(context, objects.get(0),
+									false);
+						}
+
+					}
+
+					@Override
+					public void onSuccessEmptyList() {
+						Log.d("Service", "Empty! (picked)");
+
+					}
+
+					@Override
+					public void onFailure() {
+						Log.d("service", "FAIL!");
+					}
+				}, true);
 	}
 
 	@Override
 	public void onSuccess(List<Order> objects) {
-		for (Order order : objects) {
-			launchNotification(context, order);
+		if (objects.size() > 0) {
+			launchNotification(context, null, true);
+		} else {
+			launchNotification(context, objects.get(0), false);
 		}
+
 	}
 
 	@Override
@@ -52,19 +80,50 @@ public class Alarm extends BroadcastReceiver implements ListCallback<Order> {
 		Log.d("service", "FAIL!");
 	}
 
-	private void launchNotification(Context context, Order order) {
+	private void launchPickedNotification(Context context, Order order,
+			boolean a_lot) {
+		Log.d("Service", "Picked orders!");
+		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
+				context).setSmallIcon(R.drawable.ic_launcher)
+				.setContentTitle("Order picked!").setAutoCancel(true);
+		if (a_lot) {
+			mBuilder.setContentText("Some orders have been picked by your employees");
+		} else {
+			mBuilder.setContentText("Your order #" + order.getId()
+					+ " has been picked by your employees.");
+		}
+		Intent resultIntent = new Intent(context, OverviewActivity.class);
+		resultIntent.putExtra("ready", false);
+		resultIntent.putExtra("picked", true);
+
+		TaskStackBuilder stackBuilder = TaskStackBuilder.from(context);
+		stackBuilder.addParentStack(OverviewActivity.class);
+		stackBuilder.addNextIntent(resultIntent);
+		PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0,
+				PendingIntent.FLAG_UPDATE_CURRENT);
+		mBuilder.setContentIntent(resultPendingIntent);
+		NotificationManager mNotificationManager = (NotificationManager) context
+				.getSystemService(Context.NOTIFICATION_SERVICE);
+		mNotificationManager.notify(mId, mBuilder.getNotification());
+
+	}
+
+	private void launchNotification(Context context, Order order, boolean a_lot) {
 		Log.d("Service", "New orders!");
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				context)
-				.setSmallIcon(R.drawable.ic_launcher)
+				context).setSmallIcon(R.drawable.ic_launcher)
 				.setContentTitle("Order ready!")
-				.setContentText(
-						"Your order #"
-								+ order.getId()
-								+ " has been packed and its ready to be delivered.")
+
 				.setAutoCancel(true);
+		if (a_lot) {
+			mBuilder.setContentText("Some orders have been packed and are ready to be delivered.");
+		} else {
+			mBuilder.setContentText("Your order #" + order.getId()
+					+ " has been packed and is ready to be delivered.");
+		}
 		Intent resultIntent = new Intent(context, OverviewActivity.class);
 		resultIntent.putExtra("ready", true);
+		resultIntent.putExtra("picked", false);
 
 		TaskStackBuilder stackBuilder = TaskStackBuilder.from(context);
 		stackBuilder.addParentStack(OverviewActivity.class);

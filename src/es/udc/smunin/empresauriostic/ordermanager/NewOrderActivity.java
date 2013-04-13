@@ -54,6 +54,7 @@ public class NewOrderActivity extends SherlockActivity implements
 		configActionBar();
 		this.products_spinner = (Spinner) findViewById(R.id.spinner1);
 		this.amount = (TextView) findViewById(R.id.editText1);
+		showDialog(0);
 		OperationsManager.getInstance().getProducts(this, this);
 		((Button) findViewById(R.id.button1)).setOnClickListener(this);
 		productIndex = 0;
@@ -114,12 +115,14 @@ public class NewOrderActivity extends SherlockActivity implements
 	public void onSuccess(List<Product> objects) {
 		this.products = objects;
 		fillSpinner();
+		loadingDialog.dismiss();
 	}
 
 	@Override
 	public void onSuccessEmptyList() {
 		Toast.makeText(getApplicationContext(), "No products :|",
 				Toast.LENGTH_SHORT).show();
+		loadingDialog.dismiss();
 	}
 
 	@Override

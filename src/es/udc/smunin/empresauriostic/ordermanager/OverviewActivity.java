@@ -48,15 +48,6 @@ public class OverviewActivity extends SherlockListActivity implements
 		configActionBar();
 		// OperationsManager.getInstance().getPendingOrders(this, this);
 		new_activity = true;
-		Bundle extras = getIntent().getExtras();
-		if (extras != null) {
-			boolean value = extras.getBoolean("ready");
-			if (value) {
-				getSupportActionBar().setSelectedNavigationItem(1);
-			} else {
-				getSupportActionBar().setSelectedNavigationItem(0);
-			}
-		}
 
 	}
 
@@ -65,7 +56,20 @@ public class OverviewActivity extends SherlockListActivity implements
 		super.onResume();
 		new_activity = true;
 		showDialog(0);
-		OperationsManager.getInstance().getPendingOrders(this, this);
+		getSupportActionBar().setSelectedNavigationItem(0);
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			boolean value = extras.getBoolean("ready");
+			if (value) {
+				getSupportActionBar().setSelectedNavigationItem(1);
+			} else {
+				boolean picked = extras.getBoolean("picked");
+				if (picked) {
+					getSupportActionBar().setSelectedNavigationItem(2);
+				}
+			}
+		}
+
 	}
 
 	private void configActionBar() {
@@ -107,6 +111,7 @@ public class OverviewActivity extends SherlockListActivity implements
 				Toast.LENGTH_SHORT).show();
 		setListAdapter(new OrderAdapter(getApplicationContext(),
 				new ArrayList<Order>()));
+		loadingDialog.dismiss();
 	}
 
 	@Override
@@ -121,7 +126,8 @@ public class OverviewActivity extends SherlockListActivity implements
 		}
 		if (itemPosition == 2) {
 			showDialog(0);
-			OperationsManager.getInstance().getFinalizedOrders(this, this);
+			OperationsManager.getInstance().getFinalizedOrders(this, this,
+					false);
 		}
 		return true;
 	}
