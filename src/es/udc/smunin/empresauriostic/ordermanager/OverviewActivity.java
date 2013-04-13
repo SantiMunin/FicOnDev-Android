@@ -53,6 +53,8 @@ public class OverviewActivity extends SherlockListActivity implements
 			boolean value = extras.getBoolean("ready");
 			if (value) {
 				getSupportActionBar().setSelectedNavigationItem(1);
+			} else {
+				getSupportActionBar().setSelectedNavigationItem(0);
 			}
 		}
 
@@ -64,7 +66,6 @@ public class OverviewActivity extends SherlockListActivity implements
 		new_activity = true;
 		showDialog(0);
 		OperationsManager.getInstance().getPendingOrders(this, this);
-		getSupportActionBar().setSelectedNavigationItem(0);
 	}
 
 	private void configActionBar() {
@@ -118,7 +119,7 @@ public class OverviewActivity extends SherlockListActivity implements
 			showDialog(0);
 			OperationsManager.getInstance().getAllCompletedOrders(this, this);
 		}
-		if (itemPosition == 1) {
+		if (itemPosition == 2) {
 			showDialog(0);
 			OperationsManager.getInstance().getFinalizedOrders(this, this);
 		}

@@ -16,7 +16,6 @@ import es.udc.smunin.empresauriostic.ordermanager.R;
 import es.udc.smunin.empresauriostic.ordermanager.model.OperationsManager;
 import es.udc.smunin.empresauriostic.ordermanager.model.callbacks.ListCallback;
 import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Order;
-import es.udc.smunin.empresauriostic.ordermanager.model.util.PreferencesUtil;
 
 public class Alarm extends BroadcastReceiver implements ListCallback<Order> {
 
@@ -65,6 +64,7 @@ public class Alarm extends BroadcastReceiver implements ListCallback<Order> {
 								+ " has been packed and its ready to be delivered.")
 				.setAutoCancel(true);
 		Intent resultIntent = new Intent(context, OverviewActivity.class);
+		resultIntent.putExtra("ready", true);
 
 		TaskStackBuilder stackBuilder = TaskStackBuilder.from(context);
 		stackBuilder.addParentStack(OverviewActivity.class);

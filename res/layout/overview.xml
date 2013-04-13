@@ -16,6 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center_vertical|center_horizontal"
+        android:gravity="center"
+        android:padding="50dp"
         android:text="You have no orders of this type" />
 
 </LinearLayout>

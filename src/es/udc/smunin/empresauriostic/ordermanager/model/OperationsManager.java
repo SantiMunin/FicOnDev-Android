@@ -67,6 +67,8 @@ public class OperationsManager {
 					public void onFailure(Throwable arg0, String arg1) {
 						super.onFailure(arg0, arg1);
 						Log.d(TAG, arg0.getMessage() + arg1);
+						callback.onFailure();
+
 					}
 				});
 	}
@@ -96,6 +98,8 @@ public class OperationsManager {
 					public void onFailure(Throwable arg0, String arg1) {
 						super.onFailure(arg0, arg1);
 						Log.d(TAG, arg0.getMessage() + arg1);
+						callback.onFailure();
+
 					}
 				});
 	}
@@ -125,6 +129,8 @@ public class OperationsManager {
 					public void onFailure(Throwable arg0, String arg1) {
 						super.onFailure(arg0, arg1);
 						Log.d(TAG, arg0.getMessage() + arg1);
+						callback.onFailure();
+
 					}
 				});
 
@@ -154,6 +160,8 @@ public class OperationsManager {
 					public void onFailure(Throwable arg0, String arg1) {
 						super.onFailure(arg0, arg1);
 						Log.d(TAG, arg0.getMessage() + arg1);
+						callback.onFailure();
+
 					}
 				});
 	}
@@ -216,6 +224,8 @@ public class OperationsManager {
 					public void onFailure(Throwable arg0, String arg1) {
 						super.onFailure(arg0, arg1);
 						Log.d(TAG, arg0.getMessage() + arg1);
+						callback.onFailure();
+
 					}
 				});
 
@@ -246,6 +256,8 @@ public class OperationsManager {
 					public void onFailure(Throwable arg0, String arg1) {
 						super.onFailure(arg0, arg1);
 						Log.d(TAG, arg0.getMessage() + arg1);
+						callback.onFailure();
+
 					}
 				});
 
@@ -257,7 +269,7 @@ public class OperationsManager {
 		client.get(buildUrl("pickedorders", sessionId),
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
-						// TODO
+						Log.d(TAG, "response: " + response);
 						List<Order> orders = ParsingUtils.parseOrders(context,
 								response, false);
 
@@ -274,8 +286,8 @@ public class OperationsManager {
 
 					@Override
 					public void onFailure(Throwable arg0, String arg1) {
-						super.onFailure(arg0, arg1);
 						Log.d(TAG, arg0.getMessage() + arg1);
+						callback.onFailure();
 					}
 				});
 	}
