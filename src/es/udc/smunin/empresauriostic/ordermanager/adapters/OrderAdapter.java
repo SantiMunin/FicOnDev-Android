@@ -1,9 +1,11 @@
 package es.udc.smunin.empresauriostic.ordermanager.adapters;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +17,12 @@ import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Order;
 public class OrderAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<Order> data;
+	private Context context;
 
 	public OrderAdapter(Context context, List<Order> data) {
 		this.inflater = LayoutInflater.from(context);
 		this.data = data;
+		this.context = context;
 	}
 
 	public int getCount() {
@@ -50,8 +54,8 @@ public class OrderAdapter extends BaseAdapter {
 		TextView product_amount = (TextView) convertView
 				.findViewById(R.id.product_amount);
 		TextView price = (TextView) convertView.findViewById(R.id.price);
-		id.setText(myOrder.getDate().toString()
-				.substring(0,myOrder.getDate().toString().indexOf("G")));
+		java.text.DateFormat dateFormat = DateFormat.getDateFormat(context);
+		id.setText(dateFormat.format(myOrder.getDate()));
 		product_amount.setText(String.valueOf(myOrder.getProduct() + " ("
 				+ myOrder.getAmount() + ")"));
 		price.setText(myOrder.getPrice().setScale(2, BigDecimal.ROUND_FLOOR)

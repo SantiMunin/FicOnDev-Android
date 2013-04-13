@@ -3,6 +3,7 @@ package es.udc.smunin.empresauriostic.ordermanager;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -17,10 +18,13 @@ import es.udc.smunin.empresauriostic.ordermanager.adapters.SpinnerAdapter;
 import es.udc.smunin.empresauriostic.ordermanager.model.OperationsManager;
 import es.udc.smunin.empresauriostic.ordermanager.model.callbacks.ListCallback;
 import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Order;
+import es.udc.smunin.empresauriostic.ordermanager.model.util.DialogUtil;
 
 public class OverviewActivity extends SherlockListActivity implements
 		ListCallback<Order>, ActionBar.OnNavigationListener {
 	boolean new_activity = true;
+	private List<Order> pending, ready;
+	private Dialog loadingDialog;
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -44,6 +48,13 @@ public class OverviewActivity extends SherlockListActivity implements
 		configActionBar();
 		// OperationsManager.getInstance().getPendingOrders(this, this);
 		new_activity = true;
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			boolean value = extras.getBoolean("ready");
+			if (value) {
+				getSupportActionBar().setSelectedNavigationItem(1);
+			}
+		}
 
 	}
 
@@ -51,28 +62,41 @@ public class OverviewActivity extends SherlockListActivity implements
 	protected void onResume() {
 		super.onResume();
 		new_activity = true;
+		showDialog(0);
+		OperationsManager.getInstance().getPendingOrders(this, this);
+		getSupportActionBar().setSelectedNavigationItem(0);
 	}
 
 	private void configActionBar() {
 		ActionBar actionBar = getSupportActionBar();
-		actionBar.setTitle("Ordroid");
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		SpinnerAdapter adapter = new SpinnerAdapter(getApplicationContext(),
-				new String[] { "Pending orders", "Ready orders" });
+				new String[] { "Pending orders", "Ready orders",
+						"Picked orders" });
 		actionBar.setListNavigationCallbacks(adapter, this);
 	}
 
 	@Override
 	public void onSuccess(List<Order> objects) {
+		/*
+		 * if (getSupportActionBar().getSelectedNavigationIndex() == 0) {
+		 * pending = objects; } if
+		 * (getSupportActionBar().getSelectedNavigationIndex() == 1) { ready =
+		 * objects; }
+		 */
 		setListAdapter(new OrderAdapter(getApplicationContext(), objects));
+		loadingDialog.dismiss();
 	}
 
 	@Override
 	public void onSuccessEmptyList() {
+		loadingDialog.dismiss();
 		setListAdapter(new OrderAdapter(getApplicationContext(),
 				new ArrayList<Order>()));
+		pending = null;
+		ready = null;
 	}
 
 	@Override
@@ -87,12 +111,27 @@ public class OverviewActivity extends SherlockListActivity implements
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		if (itemPosition == 0) {
+			showDialog(0);
 			OperationsManager.getInstance().getPendingOrders(this, this);
 		}
 		if (itemPosition == 1) {
+			showDialog(0);
 			OperationsManager.getInstance().getAllCompletedOrders(this, this);
+		}
+		if (itemPosition == 1) {
+			showDialog(0);
+			OperationsManager.getInstance().getFinalizedOrders(this, this);
 		}
 		return true;
 	}
 
+	@Override
+	@Deprecated
+	protected Dialog onCreateDialog(int id) {
+		if (id == 0) {
+			loadingDialog = DialogUtil.getLoadingDialog(this);
+			return loadingDialog;
+		}
+		return null;
+	}
 }

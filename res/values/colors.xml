@@ -11,7 +11,7 @@
     <color name="turiskana_green"> #00bf00 </color>
     <color name="turiskana_red"> #bf0000</color>
     <color name="edittext_gray"> #eeeeee </color>
-	<color name="product_color"> #363636</color>
+	<color name="product_color"> #fafafa</color>
     <string-array name="background_colors">
         <item> #222222 </item>
         <item> #444444 </item>

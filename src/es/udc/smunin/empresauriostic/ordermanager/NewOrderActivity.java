@@ -43,6 +43,7 @@ public class NewOrderActivity extends SherlockActivity implements
 	private BooleanCallback callback;
 	private int intAmount = 0;
 	private BigDecimal totalAmount;
+	private Dialog loadingDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +126,7 @@ public class NewOrderActivity extends SherlockActivity implements
 	public void onFailure() {
 		Toast.makeText(getApplicationContext(), "Connection failure",
 				Toast.LENGTH_SHORT).show();
+		loadingDialog.dismiss();
 	}
 
 	private void fillSpinner() {
@@ -142,6 +144,7 @@ public class NewOrderActivity extends SherlockActivity implements
 	@Override
 	public void onSuccess() {
 		Toast.makeText(this, "Done! :)", Toast.LENGTH_SHORT).show();
+		loadingDialog.dismiss();
 		finish();
 	}
 
@@ -173,7 +176,8 @@ public class NewOrderActivity extends SherlockActivity implements
 			return getDialog();
 		}
 		if (id == 1) {
-			return DialogUtil.getLoadingDialog(getApplicationContext());
+			loadingDialog = DialogUtil.getLoadingDialog(this);
+			return loadingDialog;
 		}
 		return null;
 	}
@@ -214,6 +218,7 @@ public class NewOrderActivity extends SherlockActivity implements
 								OperationsManager.getInstance().newOrder(
 										getApplicationContext(), callback,
 										buildJSON());
+								showDialog(1);
 							}
 						})
 				.setNegativeButton(android.R.string.cancel,

@@ -23,11 +23,6 @@ public class PreferencesUtil {
 	private final static String ID_STORY = "id_story";
 	private final static String CURRENT_CHECKPOINT = "current_checkpoint";
 
-	public static void setLoginInfo(Context context, LoginInfo loginInfo) {
-		setSessionId(context, loginInfo.getSessionId());
-		setMail(context, loginInfo.getEmail());
-	}
-
 	public static void deleteLoginInfo(Context context, LoginInfo loginInfo) {
 		setSessionId(context, "");
 		setMail(context, "");
@@ -114,7 +109,7 @@ public class PreferencesUtil {
 	public static long getTime(Context context) {
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		long result = prefs.getLong("time", 0);
+		Log.d(TAG, "Obtained time: " + result);
 		return result;
 	}
-
 }

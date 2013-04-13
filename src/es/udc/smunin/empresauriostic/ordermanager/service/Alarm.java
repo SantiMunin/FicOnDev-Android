@@ -45,16 +45,15 @@ public class Alarm extends BroadcastReceiver implements ListCallback<Order> {
 
 	@Override
 	public void onSuccessEmptyList() {
-
+		Log.d("Service", "Empty!");
 	}
 
 	@Override
 	public void onFailure() {
-
+		Log.d("service", "FAIL!");
 	}
 
 	private void launchNotification(Context context, Order order) {
-		PreferencesUtil.setTime(context, System.currentTimeMillis());
 		Log.d("Service", "New orders!");
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
 				context)
@@ -63,7 +62,8 @@ public class Alarm extends BroadcastReceiver implements ListCallback<Order> {
 				.setContentText(
 						"Your order #"
 								+ order.getId()
-								+ " has been packed and its ready to be delivered.");
+								+ " has been packed and its ready to be delivered.")
+				.setAutoCancel(true);
 		Intent resultIntent = new Intent(context, OverviewActivity.class);
 
 		TaskStackBuilder stackBuilder = TaskStackBuilder.from(context);

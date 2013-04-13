@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
+import android.content.Context;
 import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Order;
 import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Product;
 
@@ -97,7 +98,8 @@ public class ParsingUtils {
 		return result;
 	}
 
-	public static List<Order> parseOrders(String response) {
+	public static List<Order> parseOrders(Context context, String response,
+			boolean recordTime) {
 
 		List<Order> result = new LinkedList<Order>();
 		try {
@@ -116,7 +118,10 @@ public class ParsingUtils {
 						productName, price));
 
 			}
-
+			long time = jObject.getLong("server_time");
+			if (result.size() > 0 && recordTime) {
+				PreferencesUtil.setTime(context, time);
+			}
 		} catch (Exception e) {
 		}
 		return result;

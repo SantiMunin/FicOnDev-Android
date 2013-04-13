@@ -41,22 +41,25 @@ public class OperationsManager {
 	}
 
 	public void doLogin(final Context context, final String email,
-			String password, final BooleanCallback callback) {
+			final String password, final BooleanCallback callback) {
 		client.post(buildUrl("login", email, password),
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
 						String sessionId = response;
 
 						if (sessionId.length() > 0) {
-							callback.onSuccess();
 							Log.i(TAG, "Login done! (" + sessionId + ")");
 							PreferencesUtil.setMail(context, email);
-							PreferencesUtil.setPassword(context, email);
+							PreferencesUtil.setPassword(context, password);
 							PreferencesUtil.setSessionId(context, sessionId);
+							callback.onSuccess();
+
 						} else {
-							callback.onFailure();
 							Log.i(TAG, "Failed login :/");
 							PreferencesUtil.setMail(context, "");
+							PreferencesUtil.setSessionId(context, "");
+							callback.onFailure();
+
 						}
 					}
 
@@ -104,7 +107,8 @@ public class OperationsManager {
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
 						// TODO
-						List<Order> orders = ParsingUtils.parseOrders(response);
+						List<Order> orders = ParsingUtils.parseOrders(context,
+								response, false);
 
 						if (orders != null) {
 							if (orders.size() > 0) {
@@ -190,11 +194,12 @@ public class OperationsManager {
 			final ListCallback<Order> callback) {
 		String sessionId = PreferencesUtil.getSessionId(context);
 		long time = PreferencesUtil.getTime(context);
-		client.get(buildUrl("readyorders", sessionId, String.valueOf(time)),
+		client.get(buildUrl("readyorders", sessionId, "1"),
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
 						// TODO
-						List<Order> orders = ParsingUtils.parseOrders(response);
+						List<Order> orders = ParsingUtils.parseOrders(context,
+								response, true);
 
 						if (orders != null) {
 							if (orders.size() > 0) {
@@ -223,7 +228,8 @@ public class OperationsManager {
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
 						// TODO
-						List<Order> orders = ParsingUtils.parseOrders(response);
+						List<Order> orders = ParsingUtils.parseOrders(context,
+								response, false);
 
 						if (orders != null) {
 							if (orders.size() > 0) {
@@ -243,6 +249,35 @@ public class OperationsManager {
 					}
 				});
 
+	}
+
+	public void getFinalizedOrders(final Context context,
+			final ListCallback<Order> callback) {
+		String sessionId = PreferencesUtil.getSessionId(context);
+		client.get(buildUrl("pickedorders", sessionId),
+				new AsyncHttpResponseHandler() {
+					public void onSuccess(String response) {
+						// TODO
+						List<Order> orders = ParsingUtils.parseOrders(context,
+								response, false);
+
+						if (orders != null) {
+							if (orders.size() > 0) {
+								callback.onSuccess(orders);
+							} else {
+								callback.onSuccessEmptyList();
+							}
+						} else {
+							callback.onFailure();
+						}
+					}
+
+					@Override
+					public void onFailure(Throwable arg0, String arg1) {
+						super.onFailure(arg0, arg1);
+						Log.d(TAG, arg0.getMessage() + arg1);
+					}
+				});
 	}
 
 	private String buildUrl(String... params) {
