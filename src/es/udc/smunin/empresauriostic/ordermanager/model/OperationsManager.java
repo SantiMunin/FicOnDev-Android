@@ -202,7 +202,6 @@ public class OperationsManager {
 	public void getCompletedOrders(final Context context,
 			final ListCallback<Order> callback) {
 		String sessionId = PreferencesUtil.getSessionId(context);
-		long time = PreferencesUtil.getTime(context);
 		client.get(buildUrl("readyorders", sessionId, "1"),
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {

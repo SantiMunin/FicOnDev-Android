@@ -17,7 +17,6 @@ public class PreferencesUtil {
 	public static SharedPreferences prefs;
 	private final static String TAG = "Preferences";
 	private final static String SESSION_ID = "sessionId";
-	private final static String PHONE = "phone";
 	private final static String MAIL = "mail";
 	private final static String ID_STORY = "id_story";
 	private final static String CURRENT_CHECKPOINT = "current_checkpoint";

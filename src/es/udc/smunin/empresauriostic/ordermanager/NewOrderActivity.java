@@ -5,10 +5,8 @@ import java.util.List;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -17,11 +15,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
+import com.actionbarsherlock.view.MenuItem;
 
 import es.udc.smunin.empresauriostic.ordermanager.adapters.SpinnerAdapter;
 import es.udc.smunin.empresauriostic.ordermanager.model.OperationsManager;
@@ -39,9 +37,8 @@ public class NewOrderActivity extends SherlockActivity implements
 	private TextView amount;
 	private int currentAmount;
 	private int productIndex;
-	private Context context;
 	private BooleanCallback callback;
-	private int intAmount = 0;
+
 	private BigDecimal totalAmount;
 	private Dialog loadingDialog;
 
@@ -49,7 +46,6 @@ public class NewOrderActivity extends SherlockActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.new_order);
-		this.context = this;
 		this.callback = this;
 		configActionBar();
 		this.products_spinner = (Spinner) findViewById(R.id.spinner1);
@@ -77,21 +73,10 @@ public class NewOrderActivity extends SherlockActivity implements
 
 					}
 				});
-		this.amount.setOnEditorActionListener(new OnEditorActionListener() {
-
-			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
-				try {
-					currentAmount = Integer.valueOf(v.getText().toString());
-				} catch (Exception e) {
-				}
-				return true;
-			}
-		});
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -102,6 +87,7 @@ public class NewOrderActivity extends SherlockActivity implements
 	private void configActionBar() {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.setTitle("Ordroid");
+		actionBar.setHomeButtonEnabled(true);
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST
 				| ActionBar.DISPLAY_HOME_AS_UP);
@@ -109,6 +95,20 @@ public class NewOrderActivity extends SherlockActivity implements
 		SpinnerAdapter adapter = new SpinnerAdapter(getApplicationContext(),
 				new String[] { "Overview", "Pending orders", "Order history" });
 		actionBar.setListNavigationCallbacks(adapter, this);
+
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+
+		case android.R.id.home:
+			finish();
+			break;
+
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override
@@ -152,6 +152,7 @@ public class NewOrderActivity extends SherlockActivity implements
 		finish();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 		try {
@@ -218,6 +219,7 @@ public class NewOrderActivity extends SherlockActivity implements
 		builder.setMessage("Are you sure?")
 				.setPositiveButton(android.R.string.ok,
 						new DialogInterface.OnClickListener() {
+							@SuppressWarnings("deprecation")
 							public void onClick(DialogInterface dialog, int id) {
 								OperationsManager.getInstance().newOrder(
 										getApplicationContext(), callback,

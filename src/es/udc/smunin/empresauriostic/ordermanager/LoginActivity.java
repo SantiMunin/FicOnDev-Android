@@ -21,6 +21,7 @@ public class LoginActivity extends Activity implements BooleanCallback,
 	private boolean pressed_button = false;
 	private Dialog loadingDialog = null;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -60,6 +61,7 @@ public class LoginActivity extends Activity implements BooleanCallback,
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void onClick(View v) {
 		String mail = ((TextView) findViewById(R.id.email)).getText()

@@ -1,7 +1,6 @@
 package es.udc.smunin.empresauriostic.ordermanager.adapters;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import android.content.Context;

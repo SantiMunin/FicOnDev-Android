@@ -15,7 +15,6 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 
 import es.udc.smunin.empresauriostic.ordermanager.adapters.OrderAdapter;
-import es.udc.smunin.empresauriostic.ordermanager.adapters.SpinnerAdapter;
 import es.udc.smunin.empresauriostic.ordermanager.model.OperationsManager;
 import es.udc.smunin.empresauriostic.ordermanager.model.callbacks.ListCallback;
 import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Order;
@@ -24,7 +23,6 @@ import es.udc.smunin.empresauriostic.ordermanager.model.util.DialogUtil;
 public class OverviewActivity extends SherlockListActivity implements
 		ListCallback<Order>, ActionBar.OnNavigationListener {
 	boolean new_activity = true;
-	private List<Order> pending, ready;
 	private Dialog loadingDialog;
 
 	@Override
@@ -51,6 +49,7 @@ public class OverviewActivity extends SherlockListActivity implements
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -81,9 +80,6 @@ public class OverviewActivity extends SherlockListActivity implements
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setHomeButtonEnabled(true);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
-		SpinnerAdapter adapter = new SpinnerAdapter(getApplicationContext(),
-				new String[] { "Pending orders", "Ready orders",
-						"Picked orders" });
 
 		ArrayAdapter<String> list = new ArrayAdapter<String>(
 				getApplicationContext(),
@@ -95,12 +91,6 @@ public class OverviewActivity extends SherlockListActivity implements
 
 	@Override
 	public void onSuccess(List<Order> objects) {
-		/*
-		 * if (getSupportActionBar().getSelectedNavigationIndex() == 0) {
-		 * pending = objects; } if
-		 * (getSupportActionBar().getSelectedNavigationIndex() == 1) { ready =
-		 * objects; }
-		 */
 		setListAdapter(new OrderAdapter(getApplicationContext(), objects));
 		loadingDialog.dismiss();
 	}
@@ -110,8 +100,6 @@ public class OverviewActivity extends SherlockListActivity implements
 		loadingDialog.dismiss();
 		setListAdapter(new OrderAdapter(getApplicationContext(),
 				new ArrayList<Order>()));
-		pending = null;
-		ready = null;
 	}
 
 	@Override
@@ -124,6 +112,7 @@ public class OverviewActivity extends SherlockListActivity implements
 		loadingDialog.dismiss();
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean onNavigationItemSelected(int itemPosition, long itemId) {
 		if (itemPosition == 0) {

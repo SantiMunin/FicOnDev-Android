@@ -1,62 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:text="Product"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="22sp" />
+        android:layout_gravity="center"
+        android:gravity="center" >
 
-    <Spinner
-        android:id="@+id/spinner1"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="42dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="30dp"
-        android:layout_toRightOf="@+id/textView1" />
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="50dp"
+            android:text="Product"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="22sp" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/spinner1"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="29dp"
-        android:inputType="number"
-        android:text="Amount"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textSize="22sp" />
+        <Spinner
+            android:id="@+id/spinner1"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="42dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="30dp"
+            android:layout_toRightOf="@+id/textView1" />
 
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textView2"
-        android:layout_alignBottom="@+id/textView2"
-        android:layout_alignLeft="@+id/spinner1"
-        android:ems="10"
-        android:inputType="number" >
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/spinner1"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="29dp"
+            android:inputType="number"
+            android:text="Amount"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="22sp" />
 
-        <requestFocus />
-    </EditText>
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textView2"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignLeft="@+id/spinner1"
+            android:ems="10"
+            android:inputType="number" >
 
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="93dp"
-        android:text="Submit" />
+            <requestFocus />
+        </EditText>
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/editText1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="93dp"
+            android:text="Submit" />
+    </RelativeLayout>
+
+</LinearLayout>

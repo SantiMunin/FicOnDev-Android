@@ -16,6 +16,7 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import android.content.Context;
+import android.util.Log;
 import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Order;
 import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Product;
 
@@ -27,19 +28,8 @@ import es.udc.smunin.empresauriostic.ordermanager.model.objectmodels.Product;
  */
 public class ParsingUtils {
 
-	private static final String SESSION_ID = "session_id";
 	private static final String STATUS = "status";
 	private static final String SUCCESS = "success";
-	private static final String PHONE = "phone";
-	private static final String EMAIL = "email";
-	private static final String CITY = "city";
-	private static final String TITLE = "title";
-	private static final String RATING = "rating";
-	private static final String PRICE = "price";
-	private static final String FINISHED = "finished";
-	private static final String ID = "id";
-	private static final String IMAGE = "image";
-	private static final String DESCRIPTION = "description";
 
 	private static DocumentBuilderFactory factory = DocumentBuilderFactory
 			.newInstance();
@@ -68,6 +58,7 @@ public class ParsingUtils {
 		try {
 			jObject = new JSONObject(response);
 			long id = jObject.getLong("order_id");
+			Log.d("Parsing", String.valueOf(id));
 			return true;
 		} catch (Exception e) {
 			return false;
@@ -108,7 +99,6 @@ public class ParsingUtils {
 			for (int i = 0; i < productArray.length(); i++) {
 				JSONObject productObject = (JSONObject) productArray.get(i);
 				long orderId = productObject.getLong("order_id");
-				long productId = productObject.getLong("product_id");
 				String productName = productObject.getString("product_name");
 				int amount = productObject.getInt("amount");
 				long dateOrdered = productObject.getLong("date_ordered");
