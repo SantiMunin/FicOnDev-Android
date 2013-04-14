@@ -19,6 +19,7 @@ public class LoginActivity extends Activity implements BooleanCallback,
 		OnClickListener {
 
 	private boolean pressed_button = false;
+	private boolean logged = false;
 	private Dialog loadingDialog = null;
 
 	@SuppressWarnings("deprecation")
@@ -26,6 +27,9 @@ public class LoginActivity extends Activity implements BooleanCallback,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		if (logged) {
+			finish();
+		}
 		showDialog(0);
 		OperationsManager.getInstance().doLogin(getApplicationContext(),
 				PreferencesUtil.getMail(getApplicationContext()),
@@ -47,6 +51,7 @@ public class LoginActivity extends Activity implements BooleanCallback,
 		Intent i = new Intent(this, OverviewActivity.class);
 		startActivity(i);
 		loadingDialog.dismiss();
+		logged = true;
 	}
 
 	@Override
