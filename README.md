@@ -19,5 +19,6 @@ Características
 	- Uso de la ActionbarSherlock (compatible con android 2.2 <- comprobado).
 	- Uso de dialogos de carga para dar al usuario impresión de dinamismo.
 	- Login automático (una vez logeado no tiene que volver a hacerlo.
+	- Images adaptadas a varias pantllas (4 tamaños distintos).
 
 [ficondev][https://github.com/iaguis/API-ficondev-bebidas]
