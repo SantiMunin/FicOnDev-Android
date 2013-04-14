@@ -54,7 +54,6 @@ public class OverviewActivity extends SherlockListActivity implements
 	protected void onResume() {
 		super.onResume();
 		new_activity = true;
-		showDialog(0);
 
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {

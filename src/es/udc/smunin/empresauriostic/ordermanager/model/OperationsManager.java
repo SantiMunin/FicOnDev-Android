@@ -205,7 +205,6 @@ public class OperationsManager {
 		client.get(buildUrl("readyorders", sessionId, "1"),
 				new AsyncHttpResponseHandler() {
 					public void onSuccess(String response) {
-						// TODO
 						List<Order> orders = ParsingUtils.parseOrders(context,
 								response, true);
 

@@ -92,7 +92,7 @@ public class NewOrderActivity extends SherlockActivity implements
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST
 				| ActionBar.DISPLAY_HOME_AS_UP);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		SpinnerAdapter adapter = new SpinnerAdapter(getApplicationContext(),
+		SpinnerAdapter adapter = new SpinnerAdapter(getBaseContext(),
 				new String[] { "Overview", "Pending orders", "Order history" });
 		actionBar.setListNavigationCallbacks(adapter, this);
 
@@ -127,7 +127,7 @@ public class NewOrderActivity extends SherlockActivity implements
 
 	@Override
 	public void onFailure() {
-		Toast.makeText(getApplicationContext(), "Connection failure",
+		Toast.makeText(getBaseContext(), "Connection failure",
 				Toast.LENGTH_SHORT).show();
 		loadingDialog.dismiss();
 	}
@@ -139,8 +139,7 @@ public class NewOrderActivity extends SherlockActivity implements
 			data[i++] = product.getName();
 		}
 		ArrayAdapter<String> spinnerData = new ArrayAdapter<String>(
-				getApplicationContext(),
-				R.layout.sherlock_spinner_dropdown_item, data);
+				getBaseContext(), R.layout.sherlock_spinner_dropdown_item, data);
 		products_spinner.setAdapter(spinnerData);
 
 	}
