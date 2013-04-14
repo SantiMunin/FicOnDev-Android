@@ -10,7 +10,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="50dp"
         android:text="Product"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="22sp" />
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="42dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="26dp"
+        android:layout_marginTop="30dp"
         android:layout_toRightOf="@+id/textView1" />
 
     <TextView

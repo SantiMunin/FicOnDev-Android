@@ -54,8 +54,6 @@ public class NewOrderActivity extends SherlockActivity implements
 		configActionBar();
 		this.products_spinner = (Spinner) findViewById(R.id.spinner1);
 		this.amount = (TextView) findViewById(R.id.editText1);
-		showDialog(0);
-		OperationsManager.getInstance().getProducts(this, this);
 		((Button) findViewById(R.id.button1)).setOnClickListener(this);
 		productIndex = 0;
 		currentAmount = 0;
@@ -97,6 +95,7 @@ public class NewOrderActivity extends SherlockActivity implements
 	@Override
 	protected void onResume() {
 		super.onResume();
+		showDialog(1);
 		OperationsManager.getInstance().getProducts(this, this);
 	}
 
@@ -106,6 +105,7 @@ public class NewOrderActivity extends SherlockActivity implements
 		actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE);
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST
 				| ActionBar.DISPLAY_HOME_AS_UP);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		SpinnerAdapter adapter = new SpinnerAdapter(getApplicationContext(),
 				new String[] { "Overview", "Pending orders", "Order history" });
 		actionBar.setListNavigationCallbacks(adapter, this);
@@ -138,8 +138,9 @@ public class NewOrderActivity extends SherlockActivity implements
 		for (Product product : products) {
 			data[i++] = product.getName();
 		}
-		ArrayAdapter<String> spinnerData = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, data);
+		ArrayAdapter<String> spinnerData = new ArrayAdapter<String>(
+				getApplicationContext(),
+				R.layout.sherlock_spinner_dropdown_item, data);
 		products_spinner.setAdapter(spinnerData);
 
 	}

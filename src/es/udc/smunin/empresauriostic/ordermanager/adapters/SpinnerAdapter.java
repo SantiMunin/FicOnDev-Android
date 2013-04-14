@@ -36,7 +36,8 @@ public class SpinnerAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		if (convertView == null) {
-			convertView = this.inflater.inflate(R.layout.spinner_item, null);
+			convertView = this.inflater.inflate(R.layout.sherlock_spinner_item,
+					null);
 		}
 		TextView id = (TextView) convertView.findViewById(R.id.textView1);
 		id.setText(data[position]);

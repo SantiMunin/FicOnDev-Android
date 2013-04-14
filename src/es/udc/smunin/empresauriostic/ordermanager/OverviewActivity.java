@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -46,7 +47,6 @@ public class OverviewActivity extends SherlockListActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.overview);
 		configActionBar();
-		// OperationsManager.getInstance().getPendingOrders(this, this);
 		new_activity = true;
 
 	}
@@ -56,7 +56,7 @@ public class OverviewActivity extends SherlockListActivity implements
 		super.onResume();
 		new_activity = true;
 		showDialog(0);
-		getSupportActionBar().setSelectedNavigationItem(0);
+
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			boolean value = extras.getBoolean("ready");
@@ -66,8 +66,12 @@ public class OverviewActivity extends SherlockListActivity implements
 				boolean picked = extras.getBoolean("picked");
 				if (picked) {
 					getSupportActionBar().setSelectedNavigationItem(2);
+				} else {
+					getSupportActionBar().setSelectedNavigationItem(0);
 				}
 			}
+		} else {
+			getSupportActionBar().setSelectedNavigationItem(0);
 		}
 
 	}
@@ -80,7 +84,13 @@ public class OverviewActivity extends SherlockListActivity implements
 		SpinnerAdapter adapter = new SpinnerAdapter(getApplicationContext(),
 				new String[] { "Pending orders", "Ready orders",
 						"Picked orders" });
-		actionBar.setListNavigationCallbacks(adapter, this);
+
+		ArrayAdapter<String> list = new ArrayAdapter<String>(
+				getApplicationContext(),
+				R.layout.sherlock_spinner_dropdown_item, new String[] {
+						"Pending orders", "Ready orders", "Picked orders" });
+		list.setDropDownViewResource(R.layout.sherlock_spinner_dropdown_item);
+		actionBar.setListNavigationCallbacks(list, this);
 	}
 
 	@Override
